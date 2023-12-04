@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+  db:
+    image: mysql:8.2
+    environment:
+      MYSQL_DATABASE: 'app'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'pass123'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '3306:3306'
+    volumes:
+      - data-db:/var/lib/mysql
+
+volumes:
+  data-db:
