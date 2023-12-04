@@ -21,7 +21,7 @@ class Building
     #[ORM\ManyToOne(targetEntity: Village::class, inversedBy: 'buildings')]
     private Village $village;
 
-    public function __construct(BuildingType $type, Village $village, int $level = 1)
+    public function __construct(BuildingType $type, Village $village, int $level = 0)
     {
         $this->type = $type;
         $this->level = $level;

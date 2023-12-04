@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Welcome!</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        <link rel="stylesheet" href="{{ asset('assets/style.css') }}">
+    </head>
+    <body>
+    <table>
+        <tr>
+            <th>Nazwa</th>
+            <th>Poziom</th>
+            <th></th>
+        </tr>
+        {% for building in buildings %}
+        <tr>
+            <td>{{ building.type.value }}</td>
+            <td>{{ building.level }}</td>
+            <td><a href=""> [+] </a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <h3>Nieistniejące:</h3>
+    <table>
+        <tr>
+            <th>Nazwa</th>
+            <th>Poziom</th>
+            <th></th>
+        </tr>
+        {% for building in nonExistent %}
+        <tr>
+            <td>{{ building.type.value }}</td>
+            <td>{{ building.level }}</td>
+            <td><a href=""> [+] </a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    </body>
+</html>

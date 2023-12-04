@@ -19,10 +19,14 @@ class Player
     #[ORM\OneToMany(mappedBy: 'player', targetEntity: Materials::class)]
     private Collection $materials;
 
+    #[ORM\OneToMany(mappedBy: 'player', targetEntity: Village::class)]
+    private Collection $villages;
+
     public function __construct(string $name)
     {
         $this->name = $name;
         $this->materials = new ArrayCollection();
+        $this->villages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -38,5 +42,10 @@ class Player
     public function getMaterials(): Collection
     {
         return $this->materials;
+    }
+
+    public function getVillages(): Collection
+    {
+        return $this->villages;
     }
 }

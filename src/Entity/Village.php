@@ -18,9 +18,16 @@ class Village
     #[ORM\OneToMany(mappedBy: 'village', targetEntity: Building::class)]
     private Collection $buildings;
 
-    public function __construct(?string $name = null)
+    #[ORM\ManyToOne(targetEntity: Player::class, inversedBy: 'villages')]
+    private Player $player;
+
+    public function __construct(Player $player, ?string $name = null)
     {
+        $this->player = $player;
         $this->name = $name;
+        if ($name === null) {
+            $this->name = $player->getName() . "'s wioska";
+        }
     }
 
     public function getId(): ?int
@@ -36,5 +43,10 @@ class Village
     public function getBuildings(): Collection
     {
         return $this->buildings;
+    }
+
+    public function getPlayer(): Player
+    {
+        return $this->player;
     }
 }
