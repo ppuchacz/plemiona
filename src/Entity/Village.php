@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -40,6 +41,9 @@ class Village
         return $this->name;
     }
 
+    /**
+     * @return Collection|Building[]
+     */
     public function getBuildings(): Collection
     {
         return $this->buildings;

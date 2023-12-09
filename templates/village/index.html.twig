@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="pl">
     <head>
         <meta charset="UTF-8">
         <title>Welcome!</title>
@@ -7,18 +7,18 @@
         <link rel="stylesheet" href="{{ asset('assets/style.css') }}">
     </head>
     <body>
-    <table>
+    <table id="buildingsList" data-villageId="{{ villageId }}">
         <tr>
             <th>Nazwa</th>
             <th>Poziom</th>
             <th></th>
         </tr>
         {% for building in buildings %}
-        <tr>
-            <td>{{ building.type.value }}</td>
-            <td>{{ building.level }}</td>
-            <td><a href=""> [+] </a></td>
-        </tr>
+            <tr>
+                <td>{{ building.type.value }}</td>
+                <td>{{ building.level }}</td>
+                <td><button class="building-lvl-up-btn" data-id="{{ building.id }}" value="{{ building.id }}">[ + ]</button></td>
+            </tr>
         {% endfor %}
     </table>
     <h3>Nieistniejące:</h3>
@@ -32,9 +32,10 @@
         <tr>
             <td>{{ building.type.value }}</td>
             <td>{{ building.level }}</td>
-            <td><a href=""> [+] </a></td>
+            <td><button class="building-create-btn" data-type="{{ building.type.value }}" data-villageId="{{ villageId }}" value="{{ building.type.value }}">[ + ]</button></td>
         </tr>
         {% endfor %}
     </table>
+    <script src="{{ asset('assets/main.js') }}" type="application/javascript"></script>
     </body>
 </html>
