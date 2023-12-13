@@ -15,7 +15,10 @@ Install packages and prepare database:
 composer install
 php bin/console doc:mig:mig --no-interaction
 ```
-Add test user and village manually in your db
+Add test data in database by running fixtures
+```shell
+php bin/console doc:fix:load --append
+```
 
 Start php's built-in web server:
 ```
