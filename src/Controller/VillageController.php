@@ -67,6 +67,7 @@ class VillageController extends AbstractController
         ]);
     }
 
+    // unused
     #[Route('/{village}/{buildingType}', 'app_village_building_create', methods: Request::METHOD_POST)]
     public function create(
         #[MapEntity(mapping: ['village' => 'id'])]

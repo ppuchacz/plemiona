@@ -7,15 +7,18 @@ use App\Api\Model\Village\Building;
 use App\Api\Model\Village\GetMethod;
 use App\Entity\Enum\BuildingType;
 use App\Entity\Village;
+use App\Translator\AppTranslatorInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 class VillageGetRequestFactory
 {
     private $villageRepository;
+    private AppTranslatorInterface $translator;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, AppTranslatorInterface $translator)
     {
         $this->villageRepository = $entityManager->getRepository(Village::class);
+        $this->translator = $translator;
     }
 
     public function create(int $villageId): GetMethod
@@ -26,7 +29,7 @@ class VillageGetRequestFactory
         foreach ($village->getBuildings() as $building) {
             $buildings[] = new Building(
                 $building->getId(),
-                $building->getType()->value,
+                $this->translator->translateBuildingByType($building->getType()),
                 $building->getType()->value,
                 $building->getLevel(),
             );
@@ -40,7 +43,7 @@ class VillageGetRequestFactory
             }
 
             $available[] = new Available(
-                $case->value,
+                $this->translator->translateBuildingByType($case),
                 $case->value,
             );
         }
