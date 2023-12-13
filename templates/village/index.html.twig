@@ -13,28 +13,14 @@
             <th>Poziom</th>
             <th></th>
         </tr>
-        {% for building in buildings %}
-            <tr>
-                <td>{{ building.type.value }}</td>
-                <td>{{ building.level }}</td>
-                <td><button class="building-lvl-up-btn" data-id="{{ building.id }}" value="{{ building.id }}">[ + ]</button></td>
-            </tr>
-        {% endfor %}
     </table>
     <h3>Nieistniejące:</h3>
-    <table>
+    <table id="availableList" data-villageId="{{ villageId }}">
         <tr>
             <th>Nazwa</th>
             <th>Poziom</th>
             <th></th>
         </tr>
-        {% for building in nonExistent %}
-        <tr>
-            <td>{{ building.type.value }}</td>
-            <td>{{ building.level }}</td>
-            <td><button class="building-create-btn" data-type="{{ building.type.value }}" data-villageId="{{ villageId }}" value="{{ building.type.value }}">[ + ]</button></td>
-        </tr>
-        {% endfor %}
     </table>
     <script src="{{ asset('assets/main.js') }}" type="application/javascript"></script>
     </body>

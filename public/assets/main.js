@@ -1,27 +1,11 @@
-const BTN_CREATE = 'building-create-btn';
 const TABLE_BUILDINGS = 'buildingsList';
+const TABLE_NON_EXISTENT_BUILDINGS = 'availableList';
 
-var createBtns = document.getElementsByClassName(BTN_CREATE);
 // var lvlUpBtns = document.getElementsByClassName(BTN_LVL_UP);
 var tableBuildings = document.getElementById(TABLE_BUILDINGS);
+var nonExistentBuildingsTable = document.getElementById(TABLE_NON_EXISTENT_BUILDINGS);
 
 var globalTestValue = null;
-
-
-function createBtnOnClickEvent(event) {
-    console.log(event.target);
-    globalTestValue = event;
-
-    let villageId = parseInt(event.target.dataset.villageid);
-    let buildingType = event.target.dataset.type;
-    sendCreateRequest(villageId, buildingType);
-
-    window.location.reload();
-}
-
-for (let btn of createBtns) {
-    btn.onclick = createBtnOnClickEvent;
-}
 
 const URL_SERVER = 'http://localhost:8000';
 const PATH_LVL_UP_BUILDING = '/building/up';
@@ -97,12 +81,14 @@ function reloadBuildings(villageId) {
 
 async function reloadBuildingsView(response) {
     clearBuildingsTable();
+    clearAvailableTable();
 
     const data = await response.json();
 
     console.log(data.buildings)
     globalTestValue = data
     data.buildings.reverse().forEach((b) => appendBuildingToTable(b));
+    data.available.reverse().forEach((b) => appendAvailableToTable(b));
 }
 
 function clearBuildingsTable() {
@@ -111,6 +97,25 @@ function clearBuildingsTable() {
     }
 }
 
+function clearAvailableTable() {
+    while (nonExistentBuildingsTable.rows.length > 1) {
+        nonExistentBuildingsTable.deleteRow(1);
+    }
+}
+
+/**
+ * @param {int} villageId
+ * @param {string} buildingType
+ */
+function onCreate(villageId, buildingType) {
+    sendCreateRequest(villageId, buildingType)
+    reloadBuildings(villageId)
+}
+
+/**
+ * @param {int} buildingId
+ * @param {int} villageId
+ */
 function onLvlUp(buildingId, villageId) {
     sendLvlUpRequest(buildingId)
     reloadBuildings(villageId)
@@ -130,6 +135,19 @@ function appendBuildingToTable(building) {
 
     nameCell.innerText = building.name;
     levelCell.innerText = building.level;
+    btnCell.append(btn);
+}
+
+function appendAvailableToTable(building) {
+    let row = nonExistentBuildingsTable.insertRow(1);
+    let nameCell = row.insertCell(0);
+    let levelCell = row.insertCell(1);
+    let btnCell = row.insertCell(2);
+
+    let btn = createButton("[ + ]", "building-create-btn", null, () => onCreate(parseInt(nonExistentBuildingsTable.dataset.villageid), building.type));
+
+    nameCell.innerText = building.name;
+    levelCell.innerText = 0;
     btnCell.append(btn);
 }
 
