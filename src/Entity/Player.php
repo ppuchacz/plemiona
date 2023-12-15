@@ -16,16 +16,12 @@ class Player
     #[ORM\Column(length: 255)]
     private string $name;
 
-    #[ORM\OneToMany(mappedBy: 'player', targetEntity: Materials::class)]
-    private Collection $materials;
-
     #[ORM\OneToMany(mappedBy: 'player', targetEntity: Village::class)]
     private Collection $villages;
 
     public function __construct(string $name)
     {
         $this->name = $name;
-        $this->materials = new ArrayCollection();
         $this->villages = new ArrayCollection();
     }
 
@@ -37,11 +33,6 @@ class Player
     public function getName(): string
     {
         return $this->name;
-    }
-
-    public function getMaterials(): Collection
-    {
-        return $this->materials;
     }
 
     public function getVillages(): Collection

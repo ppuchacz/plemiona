@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Entity\Enum\ResourceType;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,12 +24,24 @@ class Village
     #[ORM\ManyToOne(targetEntity: Player::class, inversedBy: 'villages')]
     private Player $player;
 
+    #[ORM\OneToMany(mappedBy: 'village', targetEntity: Resource::class, cascade: ['persist'])]
+    private Collection $resources;
+
     public function __construct(Player $player, ?string $name = null)
     {
+        $this->buildings = new ArrayCollection();
+        $this->resources = new ArrayCollection();
+
         $this->player = $player;
         $this->name = $name;
         if ($name === null) {
             $this->name = $player->getName() . "'s wioska";
+        }
+
+        foreach (ResourceType::cases() as $case) {
+            $this->resources->add(
+                new Resource($case, $this)
+            );
         }
     }
 
@@ -52,5 +66,13 @@ class Village
     public function getPlayer(): Player
     {
         return $this->player;
+    }
+
+    /**
+     * @return Collection|Resource[]
+     */
+    public function getResources(): Collection
+    {
+        return $this->resources;
     }
 }

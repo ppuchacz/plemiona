@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Api\Factory\ResourcesGetRequestFactory;
 use App\Api\Factory\VillageGetRequestFactory;
 use App\Entity\Building;
 use App\Entity\Enum\BuildingType;
@@ -86,5 +87,17 @@ class VillageController extends AbstractController
         $this->entityManager->flush();
 
         return $this->redirectToRoute('app_village_index', ['village' => $village->getId()]);
+    }
+
+    #[Route('/{village}/resource', 'resource_get')]
+    public function getResources(
+        #[MapEntity(mapping: ['village' => 'id'])]
+        Village $village,
+        ResourcesGetRequestFactory $factory
+    ): Response
+    {
+        $model = $factory->create($village);
+
+        return new JsonResponse($model);
     }
 }

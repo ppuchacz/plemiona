@@ -7,6 +7,18 @@
         <link rel="stylesheet" href="{{ asset('assets/style.css') }}">
     </head>
     <body>
+    <div hidden id="data-bag" data-villageId="{{ villageId }}">
+    </div>
+    <table class="resource-container" data-villageId="{{ villageId }}">
+        <tr>
+            <td><img src="{{ asset('assets/img/wood.png') }}" width="50px" height="50px" alt="Wood resource amount"></td>
+            <td><div id="resource-wood-amount" class="resource-amount"> 0 </div></td>
+            <td><img src="{{ asset('assets/img/stone.png') }}" width="50px" height="50px" alt="Wood resource amount"></td>
+            <td><div id="resource-stone-amount" class="resource-amount"> 0 </div></td>
+            <td><img src="{{ asset('assets/img/iron.png') }}" width="50px" height="50px" alt="Wood resource amount"></td>
+            <td><div id="resource-iron-amount" class="resource-amount"> 0 </div></td>
+        </tr>
+    </table>
     <table id="buildingsList" data-villageId="{{ villageId }}">
         <tr>
             <th>Nazwa</th>
@@ -23,5 +35,7 @@
         </tr>
     </table>
     <script src="{{ asset('assets/main.js') }}" type="application/javascript"></script>
+    <script src="{{ asset('assets/buildings.js') }}" type="application/javascript"></script>
+    <script src="{{ asset('assets/resources.js') }}" type="application/javascript"></script>
     </body>
 </html>

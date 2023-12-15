@@ -2,7 +2,7 @@
 
 namespace App\Entity\Enum;
 
-enum MaterialType: string
+enum ResourceType: string
 {
     case Stone = 'stone';
     case Iron = 'iron';
