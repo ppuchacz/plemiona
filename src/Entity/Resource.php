@@ -19,8 +19,8 @@ class Resource
     #[ORM\Column]
     private float $amount = 0.0;
 
-    #[ORM\Column('datetime')]
-    private \DateTime $updatedAt;
+    #[ORM\Column]
+    private float $updatedAt;
 
     #[ORM\ManyToOne(targetEntity: Village::class, inversedBy: 'resources')]
     private Village $village;
@@ -29,7 +29,7 @@ class Resource
     {
         $this->type = $type;
         $this->village = $village;
-        $this->updatedAt = new \DateTime();
+        $this->updatedAt = microtime(true);
     }
 
     public function getId(): ?int
@@ -47,11 +47,6 @@ class Resource
         return $this->amount;
     }
 
-    public function getUpdatedAt(): \DateTime
-    {
-        return $this->updatedAt;
-    }
-
     public function getVillage(): Village
     {
         return $this->village;
@@ -65,5 +60,15 @@ class Resource
     public function subtractAmount(float $amount): void
     {
         $this->amount -= $amount;
+    }
+
+    public function getUpdatedAt(): float
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(float $updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
     }
 }
